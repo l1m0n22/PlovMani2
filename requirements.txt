@@ -1,1 +1,4 @@
-
+aiogram==3.4.1
+aiohttp==3.9.5
+mistralai==1.8.1
+pydantic==2.10.3
