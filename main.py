@@ -1,2 +1,1 @@
 
-    asyncio.run(main())
