@@ -1,4 +1,5 @@
 aiogram==3.4.1
 aiohttp==3.9.3
-mistralai==0.5.1
+mistralai==1.8.1
+
 
