@@ -1,4 +1,4 @@
-from mistralai import Mistral
+from mistralai.client import MistralClient
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types, F
@@ -10,7 +10,7 @@ mistral_api_key = "4wyfTKOF17yx2V5veUXaefiF39FkQSkp"
 TOKEN = '7623755774:AAHfIGTzbIGQOxcQf5Q1LqXQoaCYjIaamsU'
 
 model = "mistral-large-latest"
-client = Mistral(api_key=mistral_api_key)
+client = MistralClient(api_key=mistral_api_key)
 
 chat_history = {}
 
