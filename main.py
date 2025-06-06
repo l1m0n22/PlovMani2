@@ -1,10 +1,12 @@
-from mistralai.client import MistralClient
 import asyncio
 import logging
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.methods import DeleteWebhook
 from aiogram.types import Message
+
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessage
 
 mistral_api_key = "4wyfTKOF17yx2V5veUXaefiF39FkQSkp"
 TOKEN = '7623755774:AAHfIGTzbIGQOxcQf5Q1LqXQoaCYjIaamsU'
@@ -28,24 +30,23 @@ async def filter_messages(message: Message):
 
     if chat_id not in chat_history:
         chat_history[chat_id] = [
-            {
-                "role": "system",
-                "content": ""
-            }
+            ChatMessage(role="system", content="")
         ]
 
-    chat_history[chat_id].append({
-        "role": "user",
-        "content": message.text
-    })
+    chat_history[chat_id].append(
+        ChatMessage(role="user", content=message.text)
+    )
 
-    chat_response = client.chat(model=model, messages=chat_history[chat_id])
+    response = client.chat(
+        model=model,
+        messages=chat_history[chat_id]
+    )
 
-    response_text = chat_response.choices[0].message.content
-    chat_history[chat_id].append({
-        "role": "assistant",
-        "content": response_text
-    })
+    response_text = response.choices[0].message.content
+
+    chat_history[chat_id].append(
+        ChatMessage(role="assistant", content=response_text)
+    )
 
     if len(chat_history[chat_id]) > 10:
         chat_history[chat_id] = [chat_history[chat_id][0]] + chat_history[chat_id][-9:]
